@@ -1,4 +1,4 @@
-## PyPoll
+# PyPoll
 
 # In this challenge, you are tasked with helping a small, rural town modernize its vote-counting process. 
 #(Up until now, Uncle Cleetus had been trustfully tallying them one-by-one, but unfortunately, his concentration isn't 
@@ -36,13 +36,14 @@ election_csv = os.path.join("Resources", "election_data.csv")
 #Open csv file
 with open(election_csv, newline="") as csvfile:
     csvreader = csv.reader(csvfile, delimiter=",")
+    #skip header row in csv file
     next(csvreader, None)
     
-    #get total votes and rename row[2] as name
+    #get total votes and rename row[2] as name for conditional statement
     for row in csvreader:
         total_votes += 1
         name = row[2]
-        #build candidate_names and vote_count lists
+        #compile list of candidate_names and votes for each candidate
         if name not in candidate_names:
             candidate_names.append(name)
             vote_count.append(1)
@@ -53,24 +54,25 @@ with open(election_csv, newline="") as csvfile:
 #print(candidate_names)
 #print(vote_count)
 
-most_votes = 0
+#find the candidate with the most votes and the percentage for each candidate
+#define variables
 percent = []
 
-for ind_votes in range(len(candidate_names)):
-        ind_percent = vote_count[ind_votes]/total_votes * 100
+#for the range of the candidate names list, calculate the percentage and compile list
+for votes in range(len(candidate_names)):
+        ind_percent = vote_count[votes]/total_votes * 100
         percent.append(ind_percent)
-        
-        if vote_count[ind_votes] > vote_count[0]:
-            vote_count[0] = vote_count[ind_votes]
-        winner = candidate_names[most_votes]
+        #determine winner
+        if vote_count[votes] == vote_count[0]:
+            winner = candidate_names[0]
 #print(winner)
 
 #print results
 print("Election Results")
 print("-------------------------------")
 print(f"Total Votes: {total_votes}")
-for ind_votes in range(len(candidate_names)):
-    print(f"{candidate_names[ind_votes]}: {percent[ind_votes]}% ({vote_count[ind_votes]})")
+for votes in range(len(candidate_names)):
+    print(f"{candidate_names[votes]}: {percent[votes]}% ({vote_count[votes]})")
 print("--------------------------------")
 print(f"Winner: {winner}")
 
@@ -81,8 +83,8 @@ with open ("PyPoll_Election_Results.txt", "w") as text_file:
     print("Election Results", file=text_file)
     print("-------------------------------", file=text_file)
     print(f"Total Votes: {total_votes}", file=text_file)
-    for ind_votes in range(len(candidate_names)):
-        print(f"{candidate_names[ind_votes]}: {percent[ind_votes]}% ({vote_count[ind_votes]})", file=text_file)
+    for votes in range(len(candidate_names)):
+        print(f"{candidate_names[votes]}: {percent[votes]}% ({vote_count[votes]})", file=text_file)
     print("--------------------------------", file=text_file)
     print(f"Winner: {winner}", file=text_file)
 
